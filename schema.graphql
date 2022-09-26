@@ -1,0 +1,10 @@
+type Ask @entity {
+  id: ID!
+  tokenID: BigInt!
+  tokenContract: String!
+  seller: String!
+  sellerFundsRecipient: String!
+  askCurrency: String!
+  askPrice: BigInt!
+  createdAtTimestamp: BigInt!
+}
