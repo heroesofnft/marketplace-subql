@@ -8,3 +8,8 @@ type Ask @entity {
   askPrice: BigInt!
   createdAtTimestamp: BigInt!
 }
+
+type BlockEntity @entity {
+  id: ID!
+  height: BigInt!
+}

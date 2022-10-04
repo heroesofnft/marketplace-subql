@@ -18,14 +18,10 @@ network:
   endpoint: 'https://herotestnet.heroesofnft.com'
   chainId: 'fuji'
   subnet: '2kdzD7eps9QRC449zypVGBbrzkwFrefLzmt24tS8MxmvEBuWvP'
-  # chainId: mainnet
-  # subnet: C
-  # endpoint: >-
-  #   https://herotestnet.heroesofnft.com:443/ext/bc/2kdzD7eps9QRC449zypVGBbrzkwFrefLzmt24tS8MxmvEBuWvP/rpc
   # dictionary: 'https://api.subquery.network/sq/subquery/avalanche-dictionary'
 dataSources:
   - kind: avalanche/Runtime
-    startBlock: 1
+    startBlock: 43553
     options:
       abi: AsksV1_1
       address: '0x717B39602E8CabB14552E5C6D12f3e09C5993754'
@@ -35,7 +31,31 @@ dataSources:
     mapping:
       file: './dist/index.js'
       handlers:
-        - handler: handleCreatedAsk
+        ## ASK MODULE
+        - handler: handleAskCreated
           kind: avalanche/LogHandler
           filter:
-            function: AskCreated(address indexed tokenContract, uint256 indexed tokenId, Ask ask)
+          topics:
+            - AskCreated(address,uint256,Ask)
+        - handler: handleAskPriceUpdated
+          kind: avalanche/LogHandler
+          filter:
+            topics:
+              - AskPriceUpdated(address,uint256,Ask)
+        - handler: handleAskCanceled
+          kind: avalanche/LogHandler
+          filter:
+            topics:
+              - AskCanceled(address,uint256,Ask)
+        - handler: handleAskFilled
+          kind: avalanche/LogHandler
+          filter:
+            topics:
+              - AskFilled(address,uint256,address,address,Ask)
+
+        ## OFFER MODULE
+
+        ## RESERVE AUCTION MODULE
+
+        # - handler: handleBlock
+        #   kind: avalanche/BlockHandler
