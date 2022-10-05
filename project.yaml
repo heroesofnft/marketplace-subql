@@ -1,5 +1,5 @@
 specVersion: 1.0.0
-name: avalanche-subql-starter
+name: marketplace-subql
 version: 0.0.1
 runner:
   node:
@@ -9,9 +9,8 @@ runner:
     name: '@subql/query'
     version: '*'
 description: >-
-  This project can be use as a starting point for developing your new Avalanche
-  SubQuery project
-repository: 'https://github.com/subquery/avalanche-subql-starter'
+  HON Marketplace Subquery Project
+repository: 'https://github.com/heroesofnft/marketplace-subql'
 schema:
   file: ./schema.graphql
 network:
