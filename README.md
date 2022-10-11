@@ -1,5 +1,9 @@
 # SubQuery - Starter Package
 
+endpoint: https://herotestnet.heroesofnft.com:443
+
+network: endpoint: "https://herotestnet.heroesofnft.com" chainId: "fuji" subnet: "2kdzD7eps9QRC449zypVGBbrzkwFrefLzmt24tS8MxmvEBuWvP"
+
 The Starter Package is an example that you can use as a starting point for developing your SubQuery project.
 
 A SubQuery package defines which data The SubQuery will index from the Substrate blockchain, and how it will store it.
