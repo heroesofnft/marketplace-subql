@@ -34,23 +34,23 @@ dataSources:
         - handler: handleAskCreated
           kind: avalanche/LogHandler
           filter:
-          topics:
-            - AskCreated(address,uint256,Ask)
+            topics:
+              - AskCreated(address indexed tokenContract, uint256 indexed tokenId, (address seller,address sellerFundsRecipient,address askCurrency,uint16 findersFeeBps, uint256 askPrice))
         - handler: handleAskPriceUpdated
           kind: avalanche/LogHandler
           filter:
             topics:
-              - AskPriceUpdated(address,uint256,Ask)
+              - AskPriceUpdated(address indexed tokenContract, uint256 indexed tokenId,(address seller,address sellerFundsRecipient,address askCurrency,uint16 findersFeeBps, uint256 askPrice))
         - handler: handleAskCanceled
           kind: avalanche/LogHandler
           filter:
             topics:
-              - AskCanceled(address,uint256,Ask)
+              - AskCanceled(address indexed tokenContract, uint256 indexed tokenId,(address seller,address sellerFundsRecipient,address askCurrency,uint16 findersFeeBps, uint256 askPrice))
         - handler: handleAskFilled
           kind: avalanche/LogHandler
           filter:
             topics:
-              - AskFilled(address,uint256,address,address,Ask)
+              - AskFilled(address indexed tokenContract, uint256 indexed tokenId,address indexed buyer, address finder,(address seller,address sellerFundsRecipient,address askCurrency,uint16 findersFeeBps, uint256 askPrice))
 
         ## OFFER MODULE
 

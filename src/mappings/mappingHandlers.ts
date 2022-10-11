@@ -13,9 +13,8 @@ import assert from "assert";
 
 
 export async function handleAskCreated(event: AvalancheLog): Promise<void> {
-  logger.info(`Ask created: ${event.args}`);
   assert(event.args, 'No event args');
-  
+
   if (event.args.tokenId){
     const ask = new Ask(event.args.tokenId.toString() + "-" + event.args.tokenContract.toString());
     ask.tokenID = event.args.tokenId;
@@ -25,7 +24,7 @@ export async function handleAskCreated(event: AvalancheLog): Promise<void> {
     ask.askCurrency = event.args.ask.askCurrency;
     ask.askPrice = event.args.ask.askPrice;
     ask.createdAtTimestamp = event.block.timestamp;
-    logger.info("Ask AAA price updated for tokenID: " + event.args.tokenId.toString() + " and tokenContract: " + event.args.tokenContract.toString());
+    // logger.info("Ask created: " + event.args.tokenId.toString() + " and tokenContract: " + event.args.tokenContract.toString());
     await ask.save();
   }
 }
@@ -46,7 +45,7 @@ export async function handleAskCanceled(event: AvalancheLog): Promise<void> {
 
   if (event.args.tokenId){
     const id = event.args.tokenId.toString() + "-" + event.args.tokenContract.toString();
-    logger.info("Deleting ask with id: " + id);
+    // logger.info("Deleting ask with id: " + id);
     await Ask.remove(id);
   }
 }
@@ -56,6 +55,7 @@ export async function handleAskFilled(event: AvalancheLog): Promise<void> {
 
   if (event.args.tokenId){
     const id = event.args.tokenId.toString() + "-" + event.args.tokenContract.toString();
+    // logger.info("Deleting ask with id: " + id);
     await store.remove('Ask', id);
   }
 }
