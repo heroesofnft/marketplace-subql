@@ -9,7 +9,30 @@ type Ask @entity {
   createdAtTimestamp: BigInt!
 }
 
-type BlockEntity @entity {
+type ReserveAuction @entity {
   id: ID!
-  height: BigInt!
+  tokenID: BigInt!
+  tokenContract: String!
+  seller: String!
+  sellerFundsRecipient: String!
+  currency: String!
+  reservePrice: BigInt!
+  highestBid: BigInt
+  highestBidder: String
+  duration: BigInt!
+  startTime: BigInt!
+  firstBidTime: BigInt
+  createdAtTimestamp: BigInt!
+  updatedAtTimestamp: BigInt
+}
+
+type Offer @entity {
+  id: ID!
+  tokenID: BigInt!
+  tokenContract: String!
+  maker: String!
+  currency: String!
+  offerPrice: BigInt!
+  findersFeeBps: Int!
+  createdAtTimestamp: BigInt!
 }

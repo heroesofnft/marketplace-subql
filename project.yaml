@@ -53,8 +53,50 @@ dataSources:
               - AskFilled(address indexed tokenContract, uint256 indexed tokenId,address indexed buyer, address finder,(address seller,address sellerFundsRecipient,address askCurrency,uint16 findersFeeBps, uint256 askPrice))
 
         ## OFFER MODULE
+        - handler: handleOfferCreated
+          kind: avalanche/LogHandler
+          filter:
+            topics:
+              - OfferCreated(address indexed tokenContract, uint256 indexed tokenId, uint256 indexed id, (address maker,address currency,uint16 findersFeeBps,uint256 amount))
+        - handler: handleOfferUpdated
+          kind: avalanche/LogHandler
+          filter:
+            topics:
+              - OfferUpdated(address indexed tokenContract, uint256 indexed tokenId, uint256 indexed id, (address maker,address currency,uint16 findersFeeBps,uint256 amount))
+        - handler: handleOfferCanceled
+          kind: avalanche/LogHandler
+          filter:
+            topics:
+              - OfferCanceled(address indexed tokenContract, uint256 indexed tokenId, uint256 indexed id, (address maker,address currency,uint16 findersFeeBps,uint256 amount))
+        - handler: handleOfferFilled
+          kind: avalanche/LogHandler
+          filter:
+            topics:
+              - OfferFilled(address indexed tokenContract, uint256 indexed tokenId, uint256 indexed id, address taker, address finder, (address maker,address currency,uint16 findersFeeBps,uint256 amount))
 
         ## RESERVE AUCTION MODULE
-
-        # - handler: handleBlock
-        #   kind: avalanche/BlockHandler
+        - handler: handleAuctionCreated
+          kind: avalanche/LogHandler
+          filter:
+            topics:
+              - AuctionCreated(address indexed tokenContract, uint256 indexed tokenId, (address seller,address sellerFundsRecipient,uint256 reservePrice,uint256 highestBid,address highestBidder,uint48 duration,uint48 startTime,address currency,uint96 firstBidTime))
+        - handler: handleAuctionReservePriceUpdated
+          kind: avalanche/LogHandler
+          filter:
+            topics:
+              - AuctionReservePriceUpdated(address indexed tokenContract, uint256 indexed tokenId, (address seller,address sellerFundsRecipient,uint256 reservePrice,uint256 highestBid,address highestBidder,uint48 duration,uint48 startTime,address currency,uint96 firstBidTime))
+        - handler: handleAuctionCanceled
+          kind: avalanche/LogHandler
+          filter:
+            topics:
+              - AuctionCanceled(address indexed tokenContract, uint256 indexed tokenId, (address seller,address sellerFundsRecipient,uint256 reservePrice,uint256 highestBid,address highestBidder,uint48 duration,uint48 startTime,address currency,uint96 firstBidTime))
+        - handler: handleAuctionBid
+          kind: avalanche/LogHandler
+          filter:
+            topics:
+              - AuctionBid(address indexed tokenContract, uint256 indexed tokenId, bool firstBid, bool extended, (address seller,address sellerFundsRecipient,uint256 reservePrice,uint256 highestBid,address highestBidder,uint48 duration,uint48 startTime,address currency,uint96 firstBidTime))
+        - handler: handleAuctionEnded
+          kind: avalanche/LogHandler
+          filter:
+            topics:
+              - AuctionEnded(address indexed tokenContract, uint256 indexed tokenId, (address seller,address sellerFundsRecipient,uint256 reservePrice,uint256 highestBid,address highestBidder,uint48 duration,uint48 startTime,address currency,uint96 firstBidTime))
