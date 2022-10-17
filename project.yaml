@@ -18,15 +18,23 @@ network:
   chainId: 'fuji'
   subnet: '2kdzD7eps9QRC449zypVGBbrzkwFrefLzmt24tS8MxmvEBuWvP'
   # dictionary: 'https://api.subquery.network/sq/subquery/avalanche-dictionary'
+
+x-frontier: &frontier
+  kind: avalanche/Runtime
+  startBlock: 43553
+  assets:
+    AsksV1_1:
+      file: './abis/AsksV1_1.json'
+    ReserveAuctionCoreErc20:
+      file: './abis/ReserveAuctionCoreErc20.json'
+    OffersV1:
+      file: './abis/OffersV1.json'
+
 dataSources:
-  - kind: avalanche/Runtime
-    startBlock: 43553
+  - <<: *frontier
     options:
       abi: AsksV1_1
       address: '0x717B39602E8CabB14552E5C6D12f3e09C5993754'
-    assets:
-      AsksV1_1:
-        file: './abis/AsksV1_1.json'
     mapping:
       file: './dist/index.js'
       handlers:
@@ -36,22 +44,33 @@ dataSources:
           filter:
             topics:
               - AskCreated(address indexed tokenContract, uint256 indexed tokenId, (address seller,address sellerFundsRecipient,address askCurrency,uint16 findersFeeBps, uint256 askPrice))
+            # address: '0x717B39602E8CabB14552E5C6D12f3e09C5993754'
         - handler: handleAskPriceUpdated
           kind: avalanche/LogHandler
           filter:
             topics:
               - AskPriceUpdated(address indexed tokenContract, uint256 indexed tokenId,(address seller,address sellerFundsRecipient,address askCurrency,uint16 findersFeeBps, uint256 askPrice))
+            # address: '0x717B39602E8CabB14552E5C6D12f3e09C5993754'
         - handler: handleAskCanceled
           kind: avalanche/LogHandler
           filter:
             topics:
               - AskCanceled(address indexed tokenContract, uint256 indexed tokenId,(address seller,address sellerFundsRecipient,address askCurrency,uint16 findersFeeBps, uint256 askPrice))
+            # address: '0x717B39602E8CabB14552E5C6D12f3e09C5993754'
         - handler: handleAskFilled
           kind: avalanche/LogHandler
           filter:
             topics:
               - AskFilled(address indexed tokenContract, uint256 indexed tokenId,address indexed buyer, address finder,(address seller,address sellerFundsRecipient,address askCurrency,uint16 findersFeeBps, uint256 askPrice))
+            # address: '0x717B39602E8CabB14552E5C6D12f3e09C5993754'
 
+  - <<: *frontier
+    options:
+      abi: OffersV1
+      address: '0x87EdA3c908A904742F05e6b39A7a8a82EDE8E503'
+    mapping:
+      file: './dist/index.js'
+      handlers:
         ## OFFER MODULE
         - handler: handleOfferCreated
           kind: avalanche/LogHandler
@@ -74,12 +93,20 @@ dataSources:
             topics:
               - OfferFilled(address indexed tokenContract, uint256 indexed tokenId, uint256 indexed id, address taker, address finder, (address maker,address currency,uint16 findersFeeBps,uint256 amount))
 
+  - <<: *frontier
+    options:
+      abi: ReserveAuctionCoreErc20
+      address: '0x702EF440B897978aa06E71abBE030f00d7d9A589'
+    mapping:
+      file: './dist/index.js'
+      handlers:
         ## RESERVE AUCTION MODULE
         - handler: handleAuctionCreated
           kind: avalanche/LogHandler
           filter:
             topics:
               - AuctionCreated(address indexed tokenContract, uint256 indexed tokenId, (address seller,address sellerFundsRecipient,uint256 reservePrice,uint256 highestBid,address highestBidder,uint48 duration,uint48 startTime,address currency,uint96 firstBidTime))
+            # address: '0x702EF440B897978aa06E71abBE030f00d7d9A589'
         - handler: handleAuctionReservePriceUpdated
           kind: avalanche/LogHandler
           filter:

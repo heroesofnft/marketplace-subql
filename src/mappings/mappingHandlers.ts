@@ -77,7 +77,7 @@ export async function handleAuctionCreated(event: AvalancheLog): Promise<void> {
     reserveAuction.duration = event.args.auction.duration;
     reserveAuction.startTime = event.args.auction.startTime;
     reserveAuction.createdAtTimestamp = event.block.timestamp;
-    // logger.info("Ask created: " + event.args.tokenId.toString() + " and tokenContract: " + event.args.tokenContract.toString());
+    // logger.info("Auction created: " + event.args.tokenId.toString() + " and tokenContract: " + event.args.tokenContract.toString());
     await reserveAuction.save();
   }
 }
