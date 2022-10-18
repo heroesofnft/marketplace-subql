@@ -107,13 +107,13 @@ export async function handleAuctionBid(event: AvalancheLog): Promise<void> {
   assert(event.args, 'No event args');
 
   if (event.args.tokenId){
-    const reserveAuction = new ReserveAuction(event.args.tokenId.toString() + "-" + event.args.tokenContract.toString());
+    const reserveAuction = await ReserveAuction.get(event.args.tokenId.toString() + "-" + event.args.tokenContract.toString());
     reserveAuction.duration = event.args.auction.duration;
     reserveAuction.highestBid = event.args.auction.highestBid;
     reserveAuction.highestBidder = event.args.auction.highestBidder;
     reserveAuction.firstBidTime = event.args.auction.firstBidTime;
     reserveAuction.updatedAtTimestamp = event.block.timestamp;
-    // logger.info("Ask created: " + event.args.tokenId.toString() + " and tokenContract: " + event.args.tokenContract.toString());
+    // logger.info("Auction bid created: " + event.args.tokenId.toString() + " and tokenContract: " + event.args.tokenContract.toString());
     await reserveAuction.save();
   }
 }
