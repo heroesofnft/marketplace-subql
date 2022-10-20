@@ -2,3 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export { AsksV1_1__factory } from "./AsksV1_1__factory";
+export { OffersV1__factory } from "./OffersV1__factory";
+export { ReserveAuctionCoreErc20__factory } from "./ReserveAuctionCoreErc20__factory";

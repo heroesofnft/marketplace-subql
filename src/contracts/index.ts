@@ -2,5 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { AsksV1_1 } from "./AsksV1_1";
+export type { OffersV1 } from "./OffersV1";
+export type { ReserveAuctionCoreErc20 } from "./ReserveAuctionCoreErc20";
 export * as factories from "./factories";
 export { AsksV1_1__factory } from "./factories/AsksV1_1__factory";
+export { OffersV1__factory } from "./factories/OffersV1__factory";
+export { ReserveAuctionCoreErc20__factory } from "./factories/ReserveAuctionCoreErc20__factory";
