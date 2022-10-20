@@ -3,7 +3,8 @@
 import {
   Ask,
   ReserveAuction,
-  Offer
+  Offer,
+  PriceHistory
 } from "../types";
 import {
   AvalancheBlock,
@@ -58,6 +59,16 @@ export async function handleAskFilled(event: AvalancheLog): Promise<void> {
     const id = event.args.tokenId.toString() + "-" + event.args.tokenContract.toString();
     // logger.info("Deleting ask with id: " + id);
     await store.remove('Ask', id);
+
+    // Adding price to the price history
+    const priceHistory = new PriceHistory(event.args.tokenId.toString() + "-" + event.args.tokenContract.toString() + "-" + event.block.timestamp.toString());
+    priceHistory.tokenID = event.args.tokenId;
+    priceHistory.tokenContract = event.args.tokenContract;
+    priceHistory.seller = event.args.ask.seller;
+    priceHistory.price = event.args.ask.askPrice;
+    priceHistory.currency = event.args.ask.askCurrency;
+    priceHistory.createdAtTimestamp = event.block.timestamp;
+    await priceHistory.save();
   }
 }
 
@@ -126,6 +137,15 @@ export async function handleAuctionEnded(event: AvalancheLog): Promise<void> {
     // logger.info("Ask created: " + event.args.tokenId.toString() + " and tokenContract: " + event.args.tokenContract.toString());
     await ReserveAuction.remove(id);
 
+    // Adding price to the price history
+    const priceHistory = new PriceHistory(event.args.tokenId.toString() + "-" + event.args.tokenContract.toString() + "-" + event.block.timestamp.toString());
+    priceHistory.tokenID = event.args.tokenId;
+    priceHistory.tokenContract = event.args.tokenContract;
+    priceHistory.seller = event.args.auction.seller;
+    priceHistory.price = event.args.auction.highestBid;
+    priceHistory.currency = event.args.auction.currency;
+    priceHistory.createdAtTimestamp = event.block.timestamp;
+    await priceHistory.save();
   }
 }
 
@@ -174,6 +194,16 @@ export async function handleOfferFilled(event: AvalancheLog): Promise<void> {
   if (event.args.tokenId){
     const id = event.args.id.toString();
     await Offer.remove(id);
+
+    // Adding price to the price history
+    // const priceHistory = new PriceHistory(event.args.tokenId.toString() + "-" + event.args.tokenContract.toString() + "-" + event.block.timestamp.toString());
+    // priceHistory.tokenID = event.args.tokenId;
+    // priceHistory.tokenContract = event.args.tokenContract;
+    // priceHistory.seller = event.args.offer.seller;
+    // priceHistory.price = event.args.offer.offerPrice;
+    // priceHistory.currency = event.args.offer.currency;
+    // priceHistory.createdAtTimestamp = event.block.timestamp;
+    // await priceHistory.save();
   }
 }
 
